@@ -12,6 +12,7 @@
                 <th>Coût</th>
                 <th>Formation</th>
                 <th>Projet</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -22,12 +23,16 @@
                     <td>{{ session.cout }} €</td>
                     <td>{{ session.idFormation ? session.idFormation.libelle ?? session.idFormation.nom : '' }}</td>
                     <td>{{ session.idProjet ? session.idProjet.nom : '' }}</td>
+                    <td>
+                        <a href="{{ path('session_formation_delete', { id: session.id }) }}" class="btn btn-danger mb-3" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette session ?');">Supprimer</a>
+                    </td>
                 </tr>
             {% else %}
                 <tr>
                     <td colspan="5">Aucune session de formation trouvée.</td>
                 </tr>
             {% endfor %}
+            <a href="{{ path('session_formation_add') }}" class="btn btn-success mb-3">Ajouter une session de formation</a>
         </tbody>
     </table>
 {% endblock %}

@@ -15,7 +15,6 @@ final class ProjetController extends AbstractController
     #[Route('/projet', name: 'app_projet')]
     public function index(EntityManagerInterface $em): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_FORMATEUR');
         $projets = $em->getRepository(Projet::class)->findAll();
         return $this->render('projet/index.html.twig', [
             'projets' => $projets,

@@ -30,20 +30,18 @@
                                 <a class="nav-link {{ app.request.attributes.get('_route') == 'app_projet' ? 'active' : '' }}" href="{{ path('app_projet') }}">Projets</a>
                             </li>
                         {% endif %}
-                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CLIENT') %}
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
                             <li class="nav-item">
                                 <a class="nav-link {{ app.request.attributes.get('_route') == 'app_appel_de_fonds' ? 'active' : '' }}" href="{{ path('app_appel_de_fonds') }}">Appel de Fonds</a>
                             </li>
                         {% endif %}
-                        {% if is_granted('ROLE_FORMATEUR') %}
                             <li class="nav-item">
                                 <a class="nav-link {{ app.request.attributes.get('_route') == 'app_session_formation' ? 'active' : '' }}" href="{{ path('app_session_formation') }}">Sessions Formation</a>
                             </li>
-                        {% endif %}
                         {% if app.user %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('logout') }}">Déconnexion</a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('logout') }}">Déconnexion</a>
+                        </li>
                         {% else %}
                             <li class="nav-item">
                                 <a class="nav-link {{ app.request.attributes.get('_route') == 'login' ? 'active' : '' }}" href="{{ path('login') }}">Connexion</a>

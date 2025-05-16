@@ -2,47 +2,49 @@
 
 namespace App\Form;
 
-use App\Entity\Client;
-use App\Entity\Formateur;
+use App\Entity\SessionFormation;
+use App\Entity\Formation;
 use App\Entity\Projet;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjetType extends AbstractType
+class SessionFormationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Nom', TextType::class , [
-                'label' => 'Nom du projet',
+            ->add('DateDebut', DateTimeType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date de début',
                 'label_attr' => ['class' => 'form-label'],
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('BudgetInitial', IntegerType::class , [
-                'label' => 'Budget initial',
+            ->add('DateFin', DateTimeType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date de fin',
                 'label_attr' => ['class' => 'form-label'],
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('SeuilAlerte', IntegerType::class , [
-                'label' => 'Seuil d\'alerte',
+            ->add('Cout', IntegerType::class, [
+                'label' => 'Coût',
                 'label_attr' => ['class' => 'form-label'],
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('IdClient', EntityType::class, [
-                'class' => Client::class,
-                'choice_label' => 'nom',
-                'label' => 'Client',
+            ->add('IdFormation', EntityType::class, [
+                'class' => Formation::class,
+                'choice_label' => 'libelle',
+                'label' => 'Formation',
                 'label_attr' => ['class' => 'form-label'],
                 'attr' => ['class' => 'form-select'],
             ])
-            ->add('FormateurReferent', EntityType::class, [
-                'class' => Formateur::class,
-                'choice_label' => 'nom',
-                'label' => 'Formateur référent',
+            ->add('IdProjet', EntityType::class, [
+                'class' => Projet::class,
+                'choice_label' => 'Nom',
+                'label' => 'Projet',
                 'label_attr' => ['class' => 'form-label'],
                 'attr' => ['class' => 'form-select'],
             ]);
@@ -51,7 +53,7 @@ class ProjetType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Projet::class,
+            'data_class' => SessionFormation::class,
         ]);
     }
 }

@@ -12,6 +12,7 @@
                 <th>Seuil d'alerte</th>
                 <th>Client</th>
                 <th>Formateur référent</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -23,8 +24,8 @@
                     <td>{{ projet.idClient.nom }}</td>
                     <td>{{ projet.formateurReferent.nom }}</td>
                     <td>
-                    <a href="{{ path('projet_delete', { id: projet.id }) }}" class="btn btn-danger mb-3" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?');">Supprimer</a>
-                </td>
+                        <a href="{{ path('projet_delete', { id: projet.id }) }}" class="btn btn-danger mb-3" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?');">Supprimer</a>
+                    </td>
                 </tr>
             {% else %}
                 <tr>

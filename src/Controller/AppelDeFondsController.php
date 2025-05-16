@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\AppelDeFonds;
+use App\Form\AppelDeFondsType;
 use App\Entity\Projet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,15 +25,22 @@ final class AppelDeFondsController extends AbstractController
     #[Route('/appel_de_fonds/add', name: 'appel_de_fonds_add')]
     public function add(Request $request, EntityManagerInterface $em): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_CLIENT');
-        // ... logique d'ajout (formulaire, persist, flush) ...
-        // Exemple rapide :
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $appel = new AppelDeFonds();
-        // $appel->set... (remplir selon le formulaire)
-        $em->persist($appel);
-        $em->flush();
-        $this->addFlash('success', 'Appel de fonds ajouté.');
-        return $this->redirectToRoute('app_appel_de_fonds');
+        $form = $this->createForm(AppelDeFondsType::class, $appel);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($appel);
+            $em->flush();
+            $this->addFlash('success', 'Appel de fonds ajouté.');
+            return $this->redirectToRoute('app_appel_de_fonds');
+        }
+
+        return $this->render('appel_de_fonds/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     #[Route('/appel_de_fonds/delete/{id}', name: 'appel_de_fonds_delete', methods: ['POST', 'GET'])]
@@ -43,8 +51,7 @@ final class AppelDeFondsController extends AbstractController
             $this->addFlash('error', 'Appel de fonds introuvable.');
             return $this->redirectToRoute('app_appel_de_fonds');
         }
-        // Seul le client ou l'admin peut supprimer
-        if (!$this->isGranted('ROLE_CLIENT') && !$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_USER')) {
             throw $this->createAccessDeniedException();
         }
         $em->remove($appel);
