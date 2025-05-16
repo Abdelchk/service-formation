@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des sessions de formation{% endblock %}
+
+{% block body %}
+    <h1>Liste des sessions de formation</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Coût</th>
+                <th>Formation</th>
+                <th>Projet</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in sessions %}
+                <tr>
+                    <td>{{ session.dateDebut ? session.dateDebut|date('d/m/Y') : '' }}</td>
+                    <td>{{ session.dateFin ? session.dateFin|date('d/m/Y') : '' }}</td>
+                    <td>{{ session.cout }} €</td>
+                    <td>{{ session.idFormation ? session.idFormation.libelle ?? session.idFormation.nom : '' }}</td>
+                    <td>{{ session.idProjet ? session.idProjet.nom : '' }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucune session de formation trouvée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

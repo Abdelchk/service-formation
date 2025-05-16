@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des utilisateurs{% endblock %}
+
+{% block body %}
+<h1>Gestion des utilisateurs</h1>
+
+<h2>Formateurs</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for formateur in formateurs %}
+            <tr>
+                <td>{{ formateur.nom }}</td>
+                <td>{{ formateur.prenom }}</td>
+                <td>{{ formateur.email }}</td>
+                <td>
+                    <a href="#" class="btn btn-secondary">Modifier</a> | <a class="btn btn-danger" href="{{ path('delete_formateur', { id: formateur.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce formateur ?');">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Clients</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>SIREN</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for client in clients %}
+            <tr>
+                <td>{{ client.nom }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.siren }}</td>
+                <td>
+                    <a href="#" class="btn btn-secondary">Modifier</a> | <a class="btn btn-danger" href="{{ path('delete_client', { id: client.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?');">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des appels de fonds{% endblock %}
+
+{% block body %}
+    <h1>Liste des appels de fonds</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date d'émission</th>
+                <th>Date de paiement</th>
+                <th>Montant</th>
+                <th>Projet</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appel in appels %}
+                <tr>
+                    <td>{{ appel.dateEmission ? appel.dateEmission|date('d/m/Y') : '' }}</td>
+                    <td>{{ appel.datePaiement ? appel.datePaiement|date('d/m/Y') : '' }}</td>
+                    <td>{{ appel.montant }} €</td>
+                    <td>{{ appel.idProjet ? appel.idProjet.nom : '' }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun appel de fonds trouvé.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <h2>Connexion</h2>
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <form method="post">
+        <div>
+            <label for="email">Email :</label>
+            <input type="text" id="email" name="_username" required>
+        </div>
+        <div>
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="_password" required>
+        </div>
+        <button type="submit">Se connecter</button>
+    </form>
+{% endblock %}
