@@ -1,0 +1,43 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Composer
+/vendor/
+/www/vendor/
+
+# Symfony / app runtime
+/var/
+/www/var/
+/logs/
+/www/logs/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Docker / local data
+/data/
+/www/data/
+docker-compose.override.yml
+
+# Build / assets
+/public/build/
+/www/public/build/
+/public/bundles/
+
+# PHPUnit / test cache
+.phpunit.result.cache
+
+# IDEs
+/.idea/
+/.vscode/
+*.iml
+
+# Node
+/node_modules/
+
+# Misc
+*.log
+*.cache

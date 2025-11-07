@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un appel de fonds{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Ajouter un appel de fonds</h1>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
+        {{ form_end(form) }}
+        <a href="{{ path('app_appel_de_fonds') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+    </div>
+{% endblock %}

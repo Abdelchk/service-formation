@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Récapitulatif session</title>
+
+        <style>
+            html { background-color: #eee; margin: 0; }
+            body { background-color: #fff; width: 210mm; height: 297mm; margin: auto; font-family: Arial, Helvetica, sans-serif; }
+            .container { width: 180mm; padding: 10mm 15mm; margin: 0 auto; }
+            .footer { width: 180mm; padding: 5mm 15mm; position: absolute; bottom: 10mm; text-align: center; font-size: 10px; }
+            .row { width: 100%; }
+            .col-8 { width: 66.6666667%; display: inline-block; vertical-align: top; }
+            .col-12 { width: 100%; }
+            table { width: 100%; }
+            h1 { margin: 0 0 10px 0; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="width:80px;">
+                            {% if logo is defined %}
+                                <img src="{{ logo }}" height="75">
+                            {% endif %}
+                        </td>
+                        <td>
+                            <h1>Récapitulatif session</h1>
+                            <p>Client: {{ client.nom }} - {{ client.email }}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-8">
+                    <p>
+                        8 allée des peupliers - 94100 Créteil<br>
+                        SIRET 890 234 359 00024<br>
+                        TVA FR91890234359<br>
+                        Tel : +33 (0) 1 23 45 67 89
+                    </p>
+                </div>
+            </div>
+
+            <h2>Sessions inscrites</h2>
+            <table border="1" cellpadding="6" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Formation</th>
+                        <th>Date début</th>
+                        <th>Date fin</th>
+                        <th>Projet</th>
+                        <th>Coût</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for session in sessions %}
+                        <tr>
+                            <td>{{ session.formation.libelle }}</td>
+                            <td>{{ session.dateDebut ? session.dateDebut|date('Y-m-d') : '' }}</td>
+                            <td>{{ session.dateFin ? session.dateFin|date('Y-m-d') : '' }}</td>
+                            <td>{{ session.projet ? session.projet.nom : '' }}</td>
+                            <td>{{ session.cout }} €</td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="5">Aucune session</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="footer">
+            LES FORGES DU WEB - SARL au capitale de 100 000 € - RCS PONTOISE 890 234 359<br>
+            8 allée des peupliers - 94100 Créteil - Tel : +33 (0) 1 23 45 67 89 - contact@lesforgesduweb.fr
+        </div>
+    </body>
+</html>
