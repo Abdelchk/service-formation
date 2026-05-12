@@ -1,0 +1,32 @@
+# config/packages/api_security.yaml
+#
+# Configuration de sécurité de l'API — JAMAIS dans .env
+# Les clés/mots de passe sensibles sont dans le Symfony Secrets Vault.
+#
+# Pour modifier les IPs autorisées, éditer ce fichier et redéployer.
+# Ne pas commiter de vraies IPs de production dans ce fichier (utiliser une
+# variable de configuration de déploiement ou un fichier séparé non versionné).
+
+parameters:
+
+    # -------------------------------------------------------------------------
+    # IPs des serveurs de l'application tierce autorisés à appeler l'API
+    # Ajouter les adresses IPv4/IPv6 ou les CIDR des serveurs staging et prod
+    # de l'application cliente.
+    # -------------------------------------------------------------------------
+    api.allowed_ips:
+        - '127.0.0.1'          # Développement local
+        - '::1'                # Développement local IPv6
+        # - '203.0.113.10'     # [PROD] Serveur prod application tierce
+        # - '203.0.113.11'     # [STAGING] Serveur staging application tierce
+
+    # -------------------------------------------------------------------------
+    # Plages IP de l'entreprise autorisées à consulter la documentation Swagger
+    # Utiliser la notation CIDR ou des adresses exactes.
+    # -------------------------------------------------------------------------
+    swagger.allowed_ip_ranges:
+        - '127.0.0.1'          # Développement local
+        - '::1'                # Développement local IPv6
+        - '172.16.0.0/12'      # Réseau Docker (gateway 172.x.x.x)
+        # - '192.168.0.0/16'   # Réseau interne entreprise
+        # - '10.0.0.0/8'       # VPN entreprise

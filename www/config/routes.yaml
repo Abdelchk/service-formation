@@ -6,3 +6,13 @@ controllers:
 index:
     path: /
     controller: App\Controller\HomeController::index
+
+# Routes de la documentation Swagger (NelmioApiDocBundle)
+app.swagger_ui:
+    path: /api/doc
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+app.swagger_json:
+    path: /api/doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger }

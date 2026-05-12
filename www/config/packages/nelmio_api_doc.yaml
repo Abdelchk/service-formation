@@ -1,0 +1,25 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: 'API Métier — Gestion des Projets'
+            description: |
+                API sécurisée pour permettre à une application tierce d'accéder aux données
+                financières des projets de formation.
+
+                **Authentification** : fournir l'en-tête HTTP `X-API-Key` avec la clé API
+                communiquée par l'équipe IT.
+
+                **Restriction IP** : l'API n'est accessible qu'aux serveurs tiers autorisés.
+            version: '1.0.0'
+        components:
+            securitySchemes:
+                ApiKey:
+                    type: apiKey
+                    in: header
+                    name: X-API-Key
+        security:
+            - ApiKey: []
+    areas:
+        # N'inclure que les routes /api/* (hors /api/doc elle-même)
+        path_patterns:
+            - '^/api(?!/doc)'

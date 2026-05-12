@@ -20,10 +20,35 @@ security:
         chain_provider:
             chain: 
                 providers: [formateur_provider, client_provider, admin_provider]
+        # Provider en mémoire pour la documentation Swagger (crédentiels dans le vault)
+        swagger_provider:
+            memory:
+                users:
+                    swagger_admin:
+                        password: '%env(SWAGGER_PASSWORD_HASH)%'
+                        roles: ['ROLE_SWAGGER']
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        # Firewall Swagger — HTTP Basic Auth + filtre IP (géré par ApiIpFilterSubscriber)
+        # Accessible uniquement depuis les IPs entreprise (plage CIDR) + auth HTTP
+        swagger:
+            pattern: ^/api/doc
+            stateless: true
+            provider: swagger_provider
+            http_basic:
+                realm: 'Documentation API — Accès restreint'
+
+        # Firewall API — authentification par clé API (header X-API-Key)
+        # Accessible uniquement depuis les IPs des serveurs tiers (géré par ApiIpFilterSubscriber)
+        api:
+            pattern: ^/api
+            stateless: true
+            custom_authenticators:
+                - App\Security\ApiKeyAuthenticator
+
         main:
             lazy: true
             provider: chain_provider
@@ -35,6 +60,8 @@ security:
                 path: logout
                 target: login
     access_control:
+    - { path: ^/api/doc, roles: ROLE_SWAGGER }
+    - { path: ^/api, roles: ROLE_API }
     - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/profile, roles: ROLE_USER }
     - { path: ^/appel_de_fonds, roles: [ROLE_USER, ROLE_ADMIN] }

@@ -22,3 +22,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Injection de la clé API depuis le Symfony Secrets Vault (jamais dans .env)
+    App\Security\ApiKeyAuthenticator:
+        arguments:
+            $apiKey: '%env(API_KEY)%'
+
+    # Injection des IPs autorisées depuis api_security.yaml (jamais dans .env)
+    App\EventSubscriber\ApiIpFilterSubscriber:
+        arguments:
+            $apiAllowedIps: '%api.allowed_ips%'
+            $swaggerAllowedIpRanges: '%swagger.allowed_ip_ranges%'
